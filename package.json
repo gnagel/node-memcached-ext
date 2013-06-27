@@ -1,0 +1,24 @@
+{
+    "author": "Glenn Nagel <glenn@mercury-wireless.com>", 
+    "dependencies": {"memcached": "0.2.2"}, 
+    "description": "CSV and JSON extensions to memcached", 
+    "devDependencies": {
+        "chai": "1.6.1", 
+        "mocha": "1.11.0", 
+        "sprintf": "*",
+				"v8-profiler-table": ">=1.2.0"
+    }, 
+    "engines": {
+        "node": ">=v0.8.14"
+    }, 
+    "license": "MIT", 
+    "main": "./memcached_ext", 
+    "name": "memcached_ext", 
+    "repository": {
+        "url": "https://github.com/gnagel/node-memcached-ext"
+    }, 
+    "scripts": {
+        "test": "mocha --recursive --reporter spec ./tests/*.js"
+    }, 
+    "version": "1.0.0"
+}
