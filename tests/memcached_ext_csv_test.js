@@ -11,21 +11,25 @@ describe('memcached_ext: CSV Parsing', function() {
 		var to_csv = require('../memcached_ext_csv.js')
 			.to_csv;
 
-		describe('Invalid Inputs return EMPTY_VALUE', function() {
-			it('undefined', function() {
-				chai.assert.deepEqual(to_csv(undefined), constants.EMPTY_VALUE);
+		describe('Invalid Inputs', function() {
+			it('undefined -> ""', function() {
+				chai.assert.deepEqual(to_csv(undefined), '');
 			});
 
-			it('null', function() {
-				chai.assert.deepEqual(to_csv(null), constants.EMPTY_VALUE);
+			it('null -> ""', function() {
+				chai.assert.deepEqual(to_csv(null), '');
 			});
 
-			it('false', function() {
-				chai.assert.deepEqual(to_csv(false), constants.EMPTY_VALUE);
+			it('false -> "false"', function() {
+				chai.assert.deepEqual(to_csv(false), 'false');
 			});
 
-			it('EMPTY_VALUE', function() {
-				chai.assert.deepEqual(to_csv(constants.EMPTY_VALUE), constants.EMPTY_VALUE);
+			it('true -> "true"', function() {
+				chai.assert.deepEqual(to_csv(true), 'true');
+			});
+
+			it('"" -> ""', function() {
+				chai.assert.deepEqual(to_csv(''), '');
 			});
 		});
 
@@ -41,6 +45,10 @@ describe('memcached_ext: CSV Parsing', function() {
 			it('["Hello","World"] -> "Hello,World"', function() {
 				chai.assert.deepEqual(to_csv(['Hello', 'World']), 'Hello,World');
 			});
+
+			it('["Zebra","Stripes"] -> "Zebra,Stripes"', function() {
+				chai.assert.deepEqual(to_csv(['Zebra', 'Stripes']), 'Zebra,Stripes');
+			});
 		});
 	});
 
@@ -48,21 +56,25 @@ describe('memcached_ext: CSV Parsing', function() {
 		var parse_csv = require('../memcached_ext_csv.js')
 			.parse_csv;
 
-		describe('Invalid Inputs return NULL', function() {
-			it('undefined', function() {
-				chai.assert.deepEqual(parse_csv(undefined), null);
+		describe('Invalid Inputs', function() {
+			it('undefined -> undefined', function() {
+				chai.assert.deepEqual(parse_csv(undefined), undefined);
 			});
 
-			it('null', function() {
+			it('null -> null', function() {
 				chai.assert.deepEqual(parse_csv(null), null);
 			});
 
-			it('false', function() {
-				chai.assert.deepEqual(parse_csv(false), null);
+			it('false -> false', function() {
+				chai.assert.deepEqual(parse_csv(false), false);
 			});
 
-			it('EMPTY_VALUE', function() {
-				chai.assert.deepEqual(parse_csv(constants.EMPTY_VALUE), null);
+			it('true -> true', function() {
+				chai.assert.deepEqual(parse_csv(true), true);
+			});
+
+			it('"" -> []', function() {
+				chai.assert.deepEqual(parse_csv(''), []);
 			});
 		});
 
@@ -77,6 +89,10 @@ describe('memcached_ext: CSV Parsing', function() {
 
 			it('"Hello,World" -> ["Hello", "World"]', function() {
 				chai.assert.deepEqual(parse_csv('Hello,World'), ['Hello', 'World']);
+			});
+
+			it('"Zebra,Stripes" -> ["Zebra", "Stripes"]', function() {
+				chai.assert.deepEqual(parse_csv('Zebra,Stripes'), ['Zebra', 'Stripes']);
 			});
 		});
 	});

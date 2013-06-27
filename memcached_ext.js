@@ -21,14 +21,12 @@ var parse_csv = memcached_ext_csv.parse_csv;
 
 // Read the CSV
 memcached.prototype.get_csv = function(key, cb) {
-	// Debugging logging
 	if (this.debug) {
 		cb = wrap_callback('get', key, cb);
 	}
 
 	this.get(key, function(error, csv_values) {
-		// Parse the CSV
-		// Pass through to the callback
+		// Parse the CSV & Pass through to the callback
 		return cb(error, parse_csv(csv_values));
 	});
 };
@@ -39,8 +37,7 @@ memcached.prototype.set_csv = function(key, csv_values, lifetime, cb) {
 		cb = wrap_callback('set', key, cb);
 	}
 
-	// Serialize the CSV values
-	// Store the string in memcached
+	// Serialize the CSV values & Store the string in memcached
 	return this.set(key, to_csv(csv_values), lifetime, cb);
 }
 
@@ -54,14 +51,12 @@ var parse_json = memcached_ext_json.parse_json;
 
 // Read the JSON
 memcached.prototype.get_json = function(key, cb) {
-	// Debugging logging
 	if (this.debug) {
 		cb = wrap_callback('get', key, cb);
 	}
 
 	this.get(key, function(error, json_values) {
-		// Parse the JSON
-		// Pass through to the callback
+		// Parse the JSON & Pass through to the callback
 		return cb(error, parse_json(json_values));
 	});
 };
@@ -72,8 +67,7 @@ memcached.prototype.set_json = function(key, json_values, lifetime, cb) {
 		cb = wrap_callback('set', key, cb);
 	}
 
-	// Serialize the JSON values
-	// Store the string in memcached
+	// Serialize the JSON values & Store the string in memcached
 	return this.set(key, to_json(json_values), lifetime, cb);
 }
 
