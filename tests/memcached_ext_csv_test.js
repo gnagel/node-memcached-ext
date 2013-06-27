@@ -11,7 +11,6 @@ describe('memcached_ext: CSV Parsing', function() {
 		var to_csv = require('../memcached_ext_csv.js')
 			.to_csv;
 
-
 		describe('Invalid Inputs return EMPTY_VALUE', function() {
 			it('undefined', function() {
 				chai.assert.deepEqual(to_csv(undefined), constants.EMPTY_VALUE);
@@ -29,7 +28,6 @@ describe('memcached_ext: CSV Parsing', function() {
 				chai.assert.deepEqual(to_csv(constants.EMPTY_VALUE), constants.EMPTY_VALUE);
 			});
 		});
-
 
 		describe('Generates CSV String', function() {
 			it('[] -> ""', function() {
