@@ -2,15 +2,16 @@
 // Extend the Memcached Class
 // 
 var _memcached = require('memcached');
+var _csv = require('./memcached_ext_csv.js');
+var _json = require('./memcached_ext_json.js');
 module.exports = _memcached;
+module.exports.utils = {
+	to_csv: _csv.to_csv,
+	parse_csv: _csv.parse_csv,
 
-var _ext_csv = require('./memcached_ext_csv.js');
-var to_csv = _ext_csv.to_csv;
-var parse_csv = _ext_csv.parse_csv;
-
-var _ext_json = require('./memcached_ext_json.js');
-var to_json = _ext_json.to_json;
-var parse_json = _ext_json.parse_json;
+	to_json: _json.to_json,
+	parse_json: _json.parse_json,
+};
 
 // Debugging wrapper
 var wrap_callback = function(method, key, cb) {
@@ -47,7 +48,7 @@ _memcached.prototype.get_csv = function(key, cb) {
 	// Parse the CSV & Pass through to the callback
 	var cb2 = function(error, values) {
 		// console.log('get_csv=' + values);
-		return cb(error, parse_csv(values));
+		return cb(error, _csv.parse_csv(values));
 	};
 
 	// Get the data from memcached
@@ -71,7 +72,7 @@ _memcached.prototype.set_csv = function(key, values, lifetime, cb) {
 	}
 
 	// Serialize the CSV values & Store the string in memcached
-	return this.set(key, to_csv(values), lifetime, cb);
+	return this.set(key, _csv.to_csv(values), lifetime, cb);
 }
 
 
@@ -96,7 +97,7 @@ _memcached.prototype.get_json = function(key, cb) {
 
 	// Parse the JSON & Pass through to the callback
 	var cb2 = function(error, values) {
-		return cb(error, parse_json(values));
+		return cb(error, _json.parse_json(values));
 	};
 	this.get(key, cb2);
 };
@@ -117,5 +118,5 @@ _memcached.prototype.set_json = function(key, json_values, lifetime, cb) {
 	}
 
 	// Serialize the JSON values & Store the string in memcached
-	return this.set(key, to_json(json_values), lifetime, cb);
-}
+	return this.set(key, _json.to_json(json_values), lifetime, cb);
+};
