@@ -3,8 +3,6 @@ var mocha = require('mocha');
 var chai = require('chai');
 var should = chai.should();
 
-var constants = require('../memcached_ext_constants.js');
-
 describe('memcached_ext: CSV Parsing', function() {
 
 	describe('to_csv', function() {

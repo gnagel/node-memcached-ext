@@ -1,5 +1,5 @@
-var constants = require('./memcached_ext_constants.js');
-var CSV_DELIMITER = constants.CSV_DELIMITER;
+var CSV_DELIMITER = ',';
+
 
 // 
 // CSV Serializer
@@ -37,6 +37,7 @@ module.exports.to_csv = function(values) {
 	return values;
 };
 
+
 // 
 // CSV Parser
 // 
@@ -48,9 +49,12 @@ module.exports.to_csv = function(values) {
 //  any other value  -> Converted to String (see above)
 // 
 module.exports.parse_csv = function(values) {
+	// console.log('parse_csv=' + values);
+
 	// Handle invalid values
 	if (undefined === values || null === values || 'boolean' === (typeof values)) {
 		// Return the input
+		// console.log('parse_csv -> ' + values);
 		return values;
 	}
 
@@ -62,6 +66,7 @@ module.exports.parse_csv = function(values) {
 	// Empty strings get converted to empty arrays
 	values = (values.length === 0 ? [] : values.split(CSV_DELIMITER));
 
+	// console.log('parse_csv -> ' + JSON.stringify(values));
 	// Return the array
 	return values;
 };
